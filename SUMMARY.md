@@ -8,4 +8,5 @@
 * [第 2 章：寄存器](solutions/ch02-registers.md)
 * [第 3 章：寄存器（内存访问）](solutions/ch03-registers-memory-access.md)
 * [第 4 章：第一个程序](solutions/ch04-first-program.md)
+* [第 5 章：\[BX\]和 loop 指令](solutions/ch05-bx-and-loop.md)
 
