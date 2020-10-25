@@ -10,4 +10,5 @@
 * [第 4 章：第一个程序](solutions/ch04-first-program.md)
 * [第 5 章：\[BX\]和 loop 指令](solutions/ch05-bx-and-loop.md)
 * [第 6 章：包含多个段的程序](solutions/ch06-programs-with-multiple-segments.md)
+* [第 7 章：更灵活的定位内存地址的方法](solutions/ch07-more-flexible-memory-address-location.md)
 
