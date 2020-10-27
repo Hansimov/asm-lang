@@ -141,3 +141,80 @@ end start
 * 汇编语言（王爽第三版）检测点:9 - 筑基2017 - 博客园 
   * [https://www.cnblogs.com/Base-Of-Practice/articles/6883918.html](https://www.cnblogs.com/Base-Of-Practice/articles/6883918.html)
 
+## 实验 8
+
+分析下面的程序，在运行前思考：这个程序可以正确返回吗？
+
+ 运行后再思考：为什么是这种结果？
+
+ 通过这个程序加深对相关内容的理解。
+
+```text
+assume cs:codesg
+
+codesg segment
+    mov ax,4c00h
+    int 21h
+
+start: 
+    mov ax , 0
+s:  
+    nop
+    nop
+    mov di,offset s
+    mov si,offset s2
+    mov ax,cs:[si]
+    mov cs:[di],ax
+s0:
+    jmp short s
+s1:
+    mov ax,0
+    int 21h
+    mov ax,0
+s2:
+    jmp short s1
+    nop
+
+codesg ends
+end start
+```
+
+答案：
+
+1、程序入口为有 start 标号的地方。
+
+2、s 标号中语句 nop 会在运行时在代码段分配一个字节的空间。（机器码为 90，在内存中就是90H），其作用是方便在程序运行时代码段分配空间，在此写入代码（实际是机器码）。执行 2 次 nop 后，在 CS 段中分配了 2 个字节空间，内容都是 90H。（这个空间目前是空的，CPU 遇到 这2 个字节，就不执行，顺序执行下面的机器码。）
+
+3、12~15 行这四条语句的作用是将 s2 处的机器码赋值给 s 标号开始的 2 个连续空间中，也就是说，将 **jmp short s1** 这个指令的机器码（2 个字节）赋值给了 s 标号后面的 2 个字节。
+
+ **jmp short s1** 机器码到底是多少？（理解 jmp 指令偏移的是相对位移）它应该是从 si 标号偏移地址到 ****jmp 指令后的第一个字节的偏移地址。我们所说的偏移地址就是 IP。我们计算下。
+
+* **mov ax,0** == 3 字节（B80000h）；
+* **int 21H** == 2 字节（CD21h）；
+* **mov ax,0** == 3 字节（B80000h）；
+* **jmp short s1** == 2 字节（EBXXh）。
+
+那么我们可以计算出此代码位移的偏移量是 10 字节，也就是说 IP 变化了 10。由于 s1 处标号（IP值） - s2 标号后的第一个字节地址（IP 值）是 -10，转换成 16 进制（补码）为 00001010（源码10）&gt;&gt; 11110101（取反）&gt;&gt;11110110（加一）== F6H；故这个机器代码是：**EBF6。**（EB 代表 jmp 指令，F6 代表了自此偏移地址开始，向前偏移 10 个字节。）
+
+![jmp short s1 &#x5BF9;&#x5E94;&#x7684;&#x673A;&#x5668;&#x7801;&#x4E3A; EBF6](../.gitbook/assets/s0zg-mz_j3-a8px-eul-vusdn.png)
+
+因此，在标号 s 处存储的是 EBF6 这二个字节。它代表了一个 jmp 指令，无条件向前移动 10 个字节的内存单元处，并执行相应代码。
+
+程序一直自顶向下执行，直到遇到 s0 标号。**s0: jmp short s** 程序运行到此处，表示跳转到 s 标号处，机器码为 EBF6，执行它，向前偏移10个字节，正好是 codesg segment 的第一条指令 **mov ax,4c00H**：
+
+* s 标号占 2 个字节（此处为 jmp 指令 EBF6，占 2 个字节。程序从 jmp 指令后面的第一个字节地址开始偏移，偏移量为 -10。下面三条指令按照从下往上的顺序写\)；
+* **mov ax,0** == 3 字节；
+* **int 21H** == 2 字节；
+* **mov ax,4c00H** == 3 字节。
+
+因此，程序从 **mov ax 4c00H** 开始执行，直到 **int 21H** 正常结束程序。
+
+所以程序的执行顺序为：先执行 s，然后执行 s0，再跳到 s，再跳到 codesg 开头，执行 **mov ax,4c00H** 和 **int 21H** 后结束。也就是说，没有执行 s1 和 s2。
+
+![&#x7A0B;&#x5E8F;&#x6267;&#x884C;&#x5B8C;&#x540E;&#xFF0C;&#x4EE3;&#x7801;&#x6BB5;&#x7684;&#x5185;&#x5BB9;](../.gitbook/assets/ca0u-i4mvm9t0-z-y-3t.png)
+
+### 参考链接
+
+* 汇编语言（王爽第三版）实验8 分析一个奇怪的程序 - 筑基2017 - 博客园 
+  * [https://www.cnblogs.com/Base-Of-Practice/articles/6883910.html](https://www.cnblogs.com/Base-Of-Practice/articles/6883910.html)
+
