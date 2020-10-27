@@ -75,6 +75,37 @@ jmp dword ptr es:[1000H]
 
 答案：\(CS\)=0006h，\(IP\)=00BEh。
 
+## 检测点 9.2
+
+补全编程，利用 jcxz 指令，实现在内存 2000H 段中查找笫一个值为 0 的字节，找到后，将它的偏移地址存储在 dx 中 。
+
+```text
+assume cs:code
+
+code segment
+start:
+    mov ax,2000H
+    mov ds,ax
+    mov bx,0
+s:
+    mov ch,0       ;
+    mov cl,[bx]    ;
+    jcxz ok        ;
+    inc bx         ;
+    jmp short s
+ok:
+    mov dx,bx
+    mov ax,4c00h
+    int 21h
+code ends
+
+end start
+```
+
+答案：这里我们需要 jcxz 实现循环的跳出，需要想办法将 cx 的内容赋值为 ds:bx，也就是说从 ds:\[0\] 开始，逐个字节的将单元内容赋值给 cx，然后执行 jcxz 语句。
+
+由于是逐个字节的比较，bx 的偏移量应以字节为单元。我们使用的 cx 寄存器是 16 位的，因此只需要低 8 位的 cl 寄存器就可以了。为了保证 ch 为 0，首先必须置零。它们组合在一起就是 cx 的整体值。
+
 ### 参考链接
 
 * 汇编语言（王爽第三版）检测点:9 - 筑基2017 - 博客园 
