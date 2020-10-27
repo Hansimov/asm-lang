@@ -106,6 +106,36 @@ end start
 
 由于是逐个字节的比较，bx 的偏移量应以字节为单元。我们使用的 cx 寄存器是 16 位的，因此只需要低 8 位的 cl 寄存器就可以了。为了保证 ch 为 0，首先必须置零。它们组合在一起就是 cx 的整体值。
 
+## 检测点 9.3
+
+补全编程，利用 loop 指令，实现在内存 2000H 段中查找笫一个值为 0 的字节，找到后，将它的偏移地址存储在 dx 中。
+
+```text
+assume cs:code
+
+code segment
+start:
+    mov ax,2000H
+    mov ds,ax
+    mov bx,0
+s:
+    mov cl,[bx]
+    mov ch,0
+    inc cx          ;
+    inc bx
+    loop s
+ok:
+    dec bx          ; dec 指令的功能和 inc 相反，dec bx 进行的操作为：(bx)=(bx)-1
+    mov dx,bx
+    mov ax,4c00h
+    int 21h
+code ends
+
+end start
+```
+
+答案：保证这个 loop 循环的动力是：cx!=0，首先搞清这点。其次，理解 loop 指令的动作，首先是 cx=cx-1，然后才是跳转到标号执行。因此，若 cx==0，需要先 +1 才能保证 loop 中判断的是实际的 cx 值。
+
 ### 参考链接
 
 * 汇编语言（王爽第三版）检测点:9 - 筑基2017 - 博客园 
