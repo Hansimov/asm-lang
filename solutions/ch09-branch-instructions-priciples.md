@@ -218,3 +218,94 @@ end start
 * 汇编语言（王爽第三版）实验8 分析一个奇怪的程序 - 筑基2017 - 博客园 
   * [https://www.cnblogs.com/Base-Of-Practice/articles/6883910.html](https://www.cnblogs.com/Base-Of-Practice/articles/6883910.html)
 
+## 实验 9
+
+编程：在屏幕中间分别显示绿色 、 绿底红色 、 白底蓝色的字符串 'welcome to masm!'。
+
+一些实现细节：
+
+* 显示缓冲区的地址范围：B800:0000 ~ B800:7FFF
+* 80 \* 25 的区域中间，也即第 12~14 行
+  * 每行 80 个字符，即 160 个字节，偏移地址 00A0h
+  * 第 12~14 行的偏移地址为：06E0h、0780h、0820h
+* 'welcom to masm!' 共计 16 个字符，也即 32 个字节
+  * 若要在区域中间，每行还需加上列偏移，也即 \(160-32\)/2 = 64 字节 = 40h
+  * 故首字符的偏移地址为：0720h、07C0h、0860h
+* 需要双重循环
+  * 外循环：输出每一行
+  * 内循环：输出每个字符和属性
+* es 指向 data，ds 指向显示缓冲区
+
+```text
+assume cs:code
+
+data segment
+    db 'welcome to masm!'
+    db 02h,24h,71h
+data ends
+
+stack segment
+    db 10 dup (0)
+stack ends
+
+code segment
+
+start:
+    
+    mov ax,data
+    mov es,ax
+    mov di,0        ; es:di 指向 data
+    
+    mov ax,0b800h
+    mov ds,ax       ; ds:bx 指向 显示缓冲区
+
+    mov bx,0720h    ; 第 12 行首字符偏移地址
+                    ; bx 用于显示缓冲区中的字符偏移
+
+    mov si,16       ; 字符串属性在 data 段中的偏移量
+
+    mov ax,stack
+    mov ss,ax
+    mov sp,0        ; 建栈，并初始化
+
+    mov cx,3        ; 一共有 3 行
+
+s:  
+    push cx         ; 保护外循环计数
+    mov cx,16       ; 内循环次数，共 16 个字符
+
+disp:
+    mov al,es:[di]      ; di 用于 data 中的字符偏移，0~15
+    mov ds:[bx],al      ; 将字符写入显存
+
+    mov ah,es:[si]      ; si 用于 data 中的属性偏移，0~2
+    mov ds:[bx+1],ah    ; 将属性写入显存
+
+    inc di
+    add bx,2
+    loop disp
+
+    add bx,128      ; 160-32 = 128
+
+    mov di,0
+    inc si
+
+    pop cx          ; 恢复外循环计数
+    loop s
+
+
+    mov ax,4c00h
+    int 21h
+
+code ends
+
+end start
+```
+
+![&#x7A0B;&#x5E8F;&#x6267;&#x884C;&#x7ED3;&#x679C;&#xFF0C;&#x5728;&#x663E;&#x793A;&#x7F13;&#x51B2;&#x533A;&#x8F93;&#x51FA;&#x4E86;&#x5BF9;&#x5E94;&#x7684;&#x5B57;&#x7B26;&#x4E32;](../.gitbook/assets/orod2-jeq9xl-a-2-nf-l.png)
+
+### 参考链接
+
+* 汇编语言（王爽第三版）实验9 根据材料编程 - 筑基2017 - 博客园 
+  * [https://www.cnblogs.com/Base-Of-Practice/articles/6883914.html](https://www.cnblogs.com/Base-Of-Practice/articles/6883914.html)
+
