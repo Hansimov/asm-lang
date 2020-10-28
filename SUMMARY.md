@@ -13,4 +13,5 @@
 * [第 7 章：更灵活的定位内存地址的方法](solutions/ch07-more-flexible-memory-address-location.md)
 * [第 8 章：数据处理的两个基本问题](solutions/ch08-two-basic-questions-of-data-processing.md)
 * [第 9 章：转移指令的原理](solutions/ch09-branch-instructions-priciples.md)
+* [第 10 章：CALL 和 RET 指令](solutions/ch10-call-and-ret-instruction.md)
 
