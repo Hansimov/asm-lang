@@ -41,15 +41,108 @@ end start
 
 下面的程序执行后，ax 中的数值为多少？
 
-| 内存地址 | 机器码 | 汇编指令 | ax | bx | CS | IP |
-| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| 1000: 0 | b8 00 00 | mov ax,0 | 0000h |  |  |  |
-| 1000: 3 | 9A 09 00 00 10 | call far ptr s |  |  | 1000h | 0008h |
-| 1000: 8 | 40 | inc ax | （该行未执行） |  |  |  |
-| 1000: 9 | 58 | s: pop ax | 0008h（IP） |  |  |  |
-|  |  |     add ax , ax | 0010h |  |  |  |
-|  |  |     pop bx |  | 1000h（CS） |  |  |
-|  |  |     add ax,bx | **1010h** |  |  |  |
+<table>
+  <thead>
+    <tr>
+      <th style="text-align:left">&#x5185;&#x5B58;&#x5730;&#x5740;</th>
+      <th style="text-align:left">&#x673A;&#x5668;&#x7801;</th>
+      <th style="text-align:left">&#x6C47;&#x7F16;&#x6307;&#x4EE4;</th>
+      <th style="text-align:left">ax</th>
+      <th style="text-align:left">bx</th>
+      <th style="text-align:left">CS</th>
+      <th style="text-align:left">IP</th>
+      <th style="text-align:left">&#x6808;</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align:left">1000: 0</td>
+      <td style="text-align:left">b8 00 00</td>
+      <td style="text-align:left">mov ax,0</td>
+      <td style="text-align:left">0000h</td>
+      <td style="text-align:left"></td>
+      <td style="text-align:left"></td>
+      <td style="text-align:left"></td>
+      <td style="text-align:left"></td>
+    </tr>
+    <tr>
+      <td style="text-align:left">1000: 3</td>
+      <td style="text-align:left">9A 09 00 00 10</td>
+      <td style="text-align:left">call far ptr s</td>
+      <td style="text-align:left"></td>
+      <td style="text-align:left"></td>
+      <td style="text-align:left">1000h</td>
+      <td style="text-align:left">0008h</td>
+      <td style="text-align:left">
+        <p>0008h</p>
+        <p>1000h</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="text-align:left">1000: 8</td>
+      <td style="text-align:left">40</td>
+      <td style="text-align:left">inc ax</td>
+      <td style="text-align:left">&#xFF08;&#x8BE5;&#x884C;&#x672A;&#x6267;&#x884C;&#xFF09;</td>
+      <td style="text-align:left"></td>
+      <td style="text-align:left"></td>
+      <td style="text-align:left"></td>
+      <td style="text-align:left"></td>
+    </tr>
+    <tr>
+      <td style="text-align:left">1000: 9</td>
+      <td style="text-align:left">58</td>
+      <td style="text-align:left">s: pop ax</td>
+      <td style="text-align:left">0008h&#xFF08;IP&#xFF09;</td>
+      <td style="text-align:left"></td>
+      <td style="text-align:left"></td>
+      <td style="text-align:left"></td>
+      <td style="text-align:left">1000h</td>
+    </tr>
+    <tr>
+      <td style="text-align:left"></td>
+      <td style="text-align:left"></td>
+      <td style="text-align:left">add ax , ax</td>
+      <td style="text-align:left">0010h</td>
+      <td style="text-align:left"></td>
+      <td style="text-align:left"></td>
+      <td style="text-align:left"></td>
+      <td style="text-align:left"></td>
+    </tr>
+    <tr>
+      <td style="text-align:left"></td>
+      <td style="text-align:left"></td>
+      <td style="text-align:left">pop bx</td>
+      <td style="text-align:left"></td>
+      <td style="text-align:left">1000h&#xFF08;CS&#xFF09;</td>
+      <td style="text-align:left"></td>
+      <td style="text-align:left"></td>
+      <td style="text-align:left"></td>
+    </tr>
+    <tr>
+      <td style="text-align:left"></td>
+      <td style="text-align:left"></td>
+      <td style="text-align:left">add ax,bx</td>
+      <td style="text-align:left"><b>1010h</b>
+      </td>
+      <td style="text-align:left"></td>
+      <td style="text-align:left"></td>
+      <td style="text-align:left"></td>
+      <td style="text-align:left"></td>
+    </tr>
+  </tbody>
+</table>
+
+## 检测点 10.4
+
+下面的程序执行后，ax 中的数值为多少？
+
+| 内存地址 | 机器码 | 汇编指令 | ax | IP | 栈 |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| 1000: 0 | b8 06 00 | mov ax,6 | 0006h | 0003h |  |
+| 1000: 3 | ff d0 | call ax | （跳转到 0006h） | 0005h | 0005h |
+| 1000: 5 | 40 | inc ax |  |  |  |
+| 1000: 6 |  | mov bp,sp |  |  |  |
+|  |  | add ax, \[bp\] | **000Bh** |  |  |
 
 ### 参考链接：
 
