@@ -14,4 +14,5 @@
 * [第 8 章：数据处理的两个基本问题](solutions/ch08-two-basic-questions-of-data-processing.md)
 * [第 9 章：转移指令的原理](solutions/ch09-branch-instructions-priciples.md)
 * [第 10 章：CALL 和 RET 指令](solutions/ch10-call-and-ret-instruction.md)
+* [第 11 章：标志寄存器](solutions/di-11-zhang-biao-zhi-ji-cun-qi.md)
 

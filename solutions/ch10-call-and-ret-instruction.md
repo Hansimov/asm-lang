@@ -222,3 +222,56 @@ end start
 * 汇编语言（王爽第三版）检测点10 - 筑基2017 - 博客园 
   * [https://www.cnblogs.com/Base-Of-Practice/articles/6883922.html](https://www.cnblogs.com/Base-Of-Practice/articles/6883922.html)
 
+## 实验 10 编写子程序
+
+### 一、显示字符串
+
+显示字符串是现实工作中经常要用到的功能，应该编写一个通用的子程序来实现这个功能。我们应该提供灵活的调用接口，使调用者可以决定显示的位置（行、列）、内容和颜色。
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align:left"></th>
+      <th style="text-align:left">&#x63CF;&#x8FF0;</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align:left">&#x540D;&#x79F0;</td>
+      <td style="text-align:left">show_str</td>
+    </tr>
+    <tr>
+      <td style="text-align:left">&#x529F;&#x80FD;</td>
+      <td style="text-align:left">&#x5728;&#x6307;&#x5B9A;&#x7684;&#x4F4D;&#x7F6E;&#xFF0C;&#x7528;&#x6307;&#x5B9A;&#x7684;&#x989C;&#x8272;&#xFF0C;&#x663E;&#x793A;&#x4E00;&#x4E2A;&#x7528;
+        0 &#x7ED3;&#x675F;&#x7684;&#x5B57;&#x7B26;&#x4E32;&#x3002;</td>
+    </tr>
+    <tr>
+      <td style="text-align:left">&#x53C2;&#x6570;</td>
+      <td style="text-align:left">
+        <p>(dh)&#xFF1D;&#x884C;&#x53F7;&#xFF08;&#x53D6;&#x503C;&#x8303;&#x56F4; 0~24&#xFF09;</p>
+        <p>(di)&#xFF1D;&#x5217;&#x53F7;&#xFF08;&#x53D6;&#x503C;&#x8303;&#x56F4; 0~79&#xFF09;</p>
+        <p>(cl)&#xFF1D;&#x989C;&#x8272;</p>
+        <p>ds:si &#x6307;&#x5411;&#x5B57;&#x7B26;&#x4E32;&#x7684;&#x9996;&#x5730;&#x5740;</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="text-align:left">&#x8FD4;&#x56DE;</td>
+      <td style="text-align:left">&#x65E0;</td>
+    </tr>
+    <tr>
+      <td style="text-align:left">&#x5E94;&#x7528;&#x4E3E;&#x4F8B;</td>
+      <td style="text-align:left">&#x5728;&#x5C4F;&#x5E55;&#x7684; 8 &#x884C; 3 &#x5217;&#xFF0C;&#x7528;&#x7EFF;&#x8272;&#x663E;&#x793A;
+        data &#x6BB5;&#x4E2D;&#x7684;&#x5B57;&#x7B26;&#x4E32;&#x3002;</td>
+    </tr>
+  </tbody>
+</table>
+
+```text
+
+```
+
+### 参考链接
+
+* 汇编语言（王爽第三版）实验10：编写子程序 - 筑基2017 - 博客园 
+  * [https://www.cnblogs.com/Base-Of-Practice/articles/6883929.html](https://www.cnblogs.com/Base-Of-Practice/articles/6883929.html)
+
