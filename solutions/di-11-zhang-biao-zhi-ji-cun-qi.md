@@ -33,8 +33,48 @@
 * SF：执行指令后的结果，最高位是1，SF就是1（负数）；最高位是0，SF就是0（正数）；
 * PF：数 1 的个数。或将二进制的所有1相加，得出的十进制结果是偶数，PF=1，否则 PF=0.
 
+## 检测点 11.3
+
+（1）补全下面的程序，统计 F000:0 处 32 个宇节中 ， 大小在 \[32,128\] 的数据的个数 。
+
+```text
+mov ax,0f000h
+mov ds,ax
+mov bx,0
+mov dx,0
+mov cx,32
+s:  mov al,[bx]
+    cmp al,32
+    jb s0      ; al < 32 
+    cmp al,128
+    ja s0      ; al > 128 
+    inc dx
+s0: inc bx
+    loop s
+```
+
+（2）补全下面的程序，统计 F000:0 处 32 个宇节中 ， 大小在 \(32,128\) 的数据的个数 。
+
+```text
+mov ax,0f000h
+mov ds,ax
+mov bx,0
+mov dx,0
+mov cx,32
+s:  mov al,[bx]
+    cmp al,32
+    jna s0       ; al <= 32
+    cmp al,128
+    jnb s0       ; al >= 128
+    inc dx
+s0: inc bx
+    loop s
+```
+
 ### 参考链接
 
 * 汇编语言（王爽第三版）检测点11 - 筑基2017 - 博客园 
   * [https://www.cnblogs.com/Base-Of-Practice/articles/6883947.html](https://www.cnblogs.com/Base-Of-Practice/articles/6883947.html)
+
+
 
