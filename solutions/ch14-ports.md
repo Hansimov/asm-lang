@@ -112,7 +112,7 @@ start:
 ; 子程序：读取 CMOS RAM 存储的系统时间，转换成 ASCII 码，并显示
 read_and_disp:
     push ax
-    push cx
+    ; push cx
 
     add di,6    ; 递增 6 个字节，显示下一个数字
                 ;   分别为：年、月、日、时、分、秒
@@ -140,7 +140,7 @@ read_and_disp:
     mov byte ptr es:[di+2],al   ; 显示个位
     mov byte ptr es:[di+3],04h  ; 红色
 
-    pop cx
+    ; pop cx
     pop ax
 
     ret
