@@ -19,4 +19,5 @@
 * [第 13 章：int 指令](solutions/ch13-int-instruction.md)
 * [第 14 章：端口](solutions/ch14-ports.md)
 * [第 15 章：外中断](solutions/ch15-external-interrupt.md)
+* [第 16 章：直接定址表](solutions/ch16-direct-address-table.md)
 
