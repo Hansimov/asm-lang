@@ -15,7 +15,8 @@
 * [第 9 章：转移指令的原理](solutions/ch09-branch-instructions-priciples.md)
 * [第 10 章：CALL 和 RET 指令](solutions/ch10-call-and-ret-instruction.md)
 * [第 11 章：标志寄存器](solutions/ch11-flag-registers.md)
-* [第 12 章：内中断](solutions/ch12-internal-interupt.md)
+* [第 12 章：内中断](solutions/ch12-internal-interrupt.md)
 * [第 13 章：int 指令](solutions/ch13-int-instruction.md)
 * [第 14 章：端口](solutions/ch14-ports.md)
+* [第 15 章：外中断](solutions/ch15-external-interrupt.md)
 
