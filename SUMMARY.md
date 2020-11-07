@@ -20,4 +20,5 @@
 * [第 14 章：端口](solutions/ch14-ports.md)
 * [第 15 章：外中断](solutions/ch15-external-interrupt.md)
 * [第 16 章：直接定址表](solutions/ch16-direct-address-table.md)
+* [第 17 章：使用 BIOS 进行键盘输入和磁盘读写](solutions/di-17-zhang-shi-yong-bios-jin-hang-jian-pan-shu-ru-he-ci-pan-du-xie.md)
 
